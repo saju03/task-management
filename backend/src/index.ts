@@ -1,6 +1,8 @@
 import express, { Application, Express } from "express";
 import dotenv from 'dotenv';
+import initDB from "./Database/databaseConfig.js";
 
+initDB()
 dotenv.config();
 const app:Application = express()
 
