@@ -1,8 +1,10 @@
 import express, { Application, Express } from "express";
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app:Application = express()
 
-
+app.use(express.json())
 const PORT:string | number  = process.env.PORT || 3000
 
 
