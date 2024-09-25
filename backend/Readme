@@ -1,0 +1,39 @@
+|-- index.ts
+|-- Controller 
+|-- Database
+  |-- databaseConfig.ts
+|-- Utils
+|-- Middleware
+|-- Repositories
+|-- Routes
+  |-- Route.ts
+|-- Services
+|-- public
+  |-- index.html
+  |-- vite.svg
+  |-- assets
+    |-- index-DiwrgTda.css
+    |-- index-f40OySzR.js
+    |-- react-CHdo91hT.svg
+
+
+Root Files
+index.ts:
+This is likely the main entry point of the application, possibly the main TypeScript file for setting up the server, importing necessary modules, and starting the application. It might initialize the Express server and define any middleware or routes.
+Folders
+1. Controller
+This folder is likely used to hold controller files. Controllers are responsible for handling HTTP requests, calling the appropriate services, and returning the responses. Each controller typically corresponds to a specific resource or functionality (e.g., UserController, ProductController).
+2. Database
+Contains files related to database configurations and connections.
+databaseConfig.ts: This file likely includes configuration for connecting to the database, such as the connection string, pooling options, and initialization code.
+3. Utils
+This folder probably holds utility functions or classes that are used across the project. These helpers might be responsible for tasks like data formatting, logging, or error handling.
+4. Middleware
+Middleware contains functions that execute before the final route controller is called. Middleware typically handles tasks such as authentication, logging, request validation, etc.
+5. Repositories
+This folder is likely part of a Repository Pattern, which abstracts the logic required to interact with the database. Each repository typically handles data access for a specific model or resource (e.g., UserRepository, ProductRepository).
+6. Routes
+Contains the routing logic, which maps HTTP requests (GET, POST, etc.) to corresponding controllers or handlers.
+Route.ts: This file likely defines routes for various API endpoints, linking URL paths to the controller methods.
+7. Services
+This folder is likely for the business logic of the application. Services handle more complex operations that don't directly belong in controllers. For example, a service might handle sending an email or performing a transaction that requires multiple steps.
