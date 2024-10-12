@@ -1,4 +1,4 @@
-import { checkExistingUser, createNewUser } from "../Repositories/user/userRepositorie.js";
+import { checkExistingUser, createNewUser } from "../Repositories/user/userRepositories.js";
 import { hashPassword } from "../Utils/hashUtils.js";
 export const signUp = async (userData) => {
     try {
@@ -8,9 +8,21 @@ export const signUp = async (userData) => {
             return {
                 status: 400,
                 message: "user already exists",
+                user: null,
             };
         }
         const addUser = await createNewUser({ ...userData, password: hashedPassword });
+        if (addUser.status === 200) {
+            addUser;
+        }
+        throw new Error("Cant create new user");
     }
-    catch (error) { }
+    catch (error) {
+        console.error(error);
+        return {
+            status: 400,
+            message: "something went wrong",
+            user: null,
+        };
+    }
 };

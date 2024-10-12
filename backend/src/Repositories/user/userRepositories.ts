@@ -1,5 +1,5 @@
 import { UserModel } from "../../Database/Models/userModel.js";
-import { IUser } from "../../interface.js";
+import { createUser, createUserReturnType, IUser } from "../../interface.js";
 
 export const checkExistingUser = async (userDetail: string): Promise<boolean> => {
   try {
@@ -19,29 +19,34 @@ export const checkExistingUser = async (userDetail: string): Promise<boolean> =>
   }
 };
 
-export const createNewUser = async (user: IUser) => {
+export const createNewUser = async (user: IUser): Promise<createUserReturnType> => {
   try {
-    const newUser = await UserModel.create(user);
-    const { password, ...userWithoutPassword } = newUser.toObject();
-
-    console.log(userWithoutPassword);
+    const newUser:createUser = await UserModel.create(user);
 
     if (newUser) {
       return {
         status: 200,
-        user: { userWithoutPassword },
+        user: {
+          userName: newUser.userName,
+          email: newUser.email,
+          name: newUser.name,
+        
+        } as IUser,
+        message: 'success',
       };
     }
+
     return {
       status: 400,
       user: null,
-      message: "something went wrong user creation",
+      message: "Something went wrong during user creation",
     };
   } catch (error) {
     console.error(error);
     return {
       status: 400,
-      message: "something went wrong can`t create user",
+      user: null,
+      message: "An error occurred: Unable to create user",
     };
   }
 };

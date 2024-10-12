@@ -5,4 +5,4 @@ const userSchema = new Schema({
     name: { type: String, required: [true, 'Name is required'] },
     password: { type: String, required: [true, 'User Name is required'] },
 });
-export const UserModel = model('users', userSchema);
+export const UserModel = model('User', userSchema);

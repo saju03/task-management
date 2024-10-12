@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema } from "mongoose";
 import { IUser } from "../../interface.js";
 
 const userSchema = new Schema<IUser>({
@@ -8,4 +8,4 @@ const userSchema = new Schema<IUser>({
     password:{type:String,required:[true,'User Name is required']},
 })
 
-export const UserModel = model('users',userSchema)
+export const UserModel: Model<IUser> = model<IUser>('User', userSchema);
