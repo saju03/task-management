@@ -1,3 +1,4 @@
+import { error } from "console";
 import { createUserReturnType, getUserReturnType, IUser, userData } from "../interface.js";
 import { checkExistingUser, createNewUser, getUser } from "../Repositories/user/userRepositories.js";
 import { compareHash, hashPassword } from "../Utils/hashUtils.js";
@@ -30,27 +31,39 @@ export const signUp = async (userData: IUser): Promise<createUserReturnType> => 
   }
 };
 
-export const singIn = async (userData: userData) => {
+export const singIn = async (userData: userData):Promise<createUserReturnType> => {
   try {
     const user: getUserReturnType = await getUser(userData);
     if (user.status == 200 && user.user) {
       if (userData.password) {
         const checkPassword = await compareHash(userData.password, user.user.password);
         if (checkPassword) {
-        return {
-          user:user.user,
-          status:user.status,
-          message:'login successful'
-        }
-        }else{
           return {
-            user:null,
-            status:401,
-            message:'wrong password'
-          }
+            user: user.user,
+            status: user.status,
+            message: "login successful",
+          };
+        } else {
+          return {
+            user: null,
+            status: 401,
+            message: "wrong password",
+          };
         }
       }
+    } else if (user.status == 404) {
+      return {
+        user: null,
+        status: 404,
+        message: "no user found sign up",
+      };
     }
-   
-  } catch (error) {}
+    throw new Error("cant sign in");
+  } catch (error) {
+    return {
+      user: null,
+      status: 500,
+      message: "sign in error",
+    };
+  }
 };

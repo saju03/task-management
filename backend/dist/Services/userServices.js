@@ -36,18 +36,32 @@ export const singIn = async (userData) => {
                     return {
                         user: user.user,
                         status: user.status,
-                        message: 'login successful'
+                        message: "login successful",
                     };
                 }
                 else {
                     return {
                         user: null,
                         status: 401,
-                        message: 'wrong password'
+                        message: "wrong password",
                     };
                 }
             }
         }
+        else if (user.status == 404) {
+            return {
+                user: null,
+                status: 404,
+                message: "no user found sign up",
+            };
+        }
+        throw new Error("cant sign in");
     }
-    catch (error) { }
+    catch (error) {
+        return {
+            user: null,
+            status: 500,
+            message: "sign in error",
+        };
+    }
 };
