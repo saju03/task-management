@@ -28,7 +28,7 @@ export const createNewUser = async (user) => {
                     email: newUser.email,
                     name: newUser.name,
                 },
-                message: 'success',
+                message: "success",
             };
         }
         return {
@@ -45,4 +45,51 @@ export const createNewUser = async (user) => {
             message: "An error occurred: Unable to create user",
         };
     }
+};
+export const getUser = async (userData) => {
+    return new Promise((resolve, reject) => {
+        if (userData.email) {
+            UserModel.findOne({ email: userData.email })
+                .then((data) => {
+                if (data) {
+                    resolve({
+                        user: {
+                            userName: data.userName,
+                            email: data.email,
+                            name: data.name,
+                            password: data.password,
+                        },
+                        status: 200,
+                    });
+                }
+                else {
+                    reject({ status: 404, message: "No user exists with this email" });
+                }
+            })
+                .catch(() => reject({ status: 500, message: "Error finding user by email" }));
+        }
+        else if (userData.userName) {
+            UserModel.findOne({ userName: userData.userName })
+                .then((data) => {
+                if (data) {
+                    resolve({
+                        user: {
+                            userName: data.userName,
+                            email: data.email,
+                            name: data.name,
+                            password: data.password,
+                        },
+                        status: 200,
+                    });
+                }
+                else {
+                    reject({ status: 404, message: "No user exists with this username" });
+                }
+            })
+                .catch(() => reject({ status: 500, message: "Error finding user by username" }));
+        }
+        else {
+            reject({ status: 400, message: "No search criteria provided" });
+        }
+    });
 };

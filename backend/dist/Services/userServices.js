@@ -1,5 +1,5 @@
-import { checkExistingUser, createNewUser } from "../Repositories/user/userRepositories.js";
-import { hashPassword } from "../Utils/hashUtils.js";
+import { checkExistingUser, createNewUser, getUser } from "../Repositories/user/userRepositories.js";
+import { compareHash, hashPassword } from "../Utils/hashUtils.js";
 export const signUp = async (userData) => {
     try {
         const hashedPassword = await hashPassword(userData.password);
@@ -25,4 +25,29 @@ export const signUp = async (userData) => {
             user: null,
         };
     }
+};
+export const singIn = async (userData) => {
+    try {
+        const user = await getUser(userData);
+        if (user.status == 200 && user.user) {
+            if (userData.password) {
+                const checkPassword = await compareHash(userData.password, user.user.password);
+                if (checkPassword) {
+                    return {
+                        user: user.user,
+                        status: user.status,
+                        message: 'login successful'
+                    };
+                }
+                else {
+                    return {
+                        user: null,
+                        status: 401,
+                        message: 'wrong password'
+                    };
+                }
+            }
+        }
+    }
+    catch (error) { }
 };

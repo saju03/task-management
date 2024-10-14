@@ -1,8 +1,8 @@
-import { createUserReturnType, IUser } from "../interface.js";
-import { checkExistingUser, createNewUser } from "../Repositories/user/userRepositories.js";
-import { hashPassword } from "../Utils/hashUtils.js";
+import { createUserReturnType, getUserReturnType, IUser, userData } from "../interface.js";
+import { checkExistingUser, createNewUser, getUser } from "../Repositories/user/userRepositories.js";
+import { compareHash, hashPassword } from "../Utils/hashUtils.js";
 
-export const signUp = async (userData: IUser): Promise<createUserReturnType> =>{
+export const signUp = async (userData: IUser): Promise<createUserReturnType> => {
   try {
     const hashedPassword: string = await hashPassword(userData.password);
 
@@ -17,7 +17,7 @@ export const signUp = async (userData: IUser): Promise<createUserReturnType> =>{
     }
     const addUser: createUserReturnType = await createNewUser({ ...userData, password: hashedPassword });
     if (addUser.status === 200) {
-     addUser
+      addUser;
     }
     throw new Error("Cant create new user");
   } catch (error) {
@@ -30,3 +30,27 @@ export const signUp = async (userData: IUser): Promise<createUserReturnType> =>{
   }
 };
 
+export const singIn = async (userData: userData) => {
+  try {
+    const user: getUserReturnType = await getUser(userData);
+    if (user.status == 200 && user.user) {
+      if (userData.password) {
+        const checkPassword = await compareHash(userData.password, user.user.password);
+        if (checkPassword) {
+        return {
+          user:user.user,
+          status:user.status,
+          message:'login successful'
+        }
+        }else{
+          return {
+            user:null,
+            status:401,
+            message:'wrong password'
+          }
+        }
+      }
+    }
+   
+  } catch (error) {}
+};

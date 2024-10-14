@@ -1,5 +1,5 @@
 import { UserModel } from "../../Database/Models/userModel.js";
-import { createUser, createUserReturnType, IUser } from "../../interface.js";
+import { dbUserType, createUserReturnType, IUser, getUserReturnType, userData } from "../../interface.js";
 
 export const checkExistingUser = async (userDetail: string): Promise<boolean> => {
   try {
@@ -21,7 +21,7 @@ export const checkExistingUser = async (userDetail: string): Promise<boolean> =>
 
 export const createNewUser = async (user: IUser): Promise<createUserReturnType> => {
   try {
-    const newUser:createUser = await UserModel.create(user);
+    const newUser: dbUserType = await UserModel.create(user);
 
     if (newUser) {
       return {
@@ -30,9 +30,8 @@ export const createNewUser = async (user: IUser): Promise<createUserReturnType> 
           userName: newUser.userName,
           email: newUser.email,
           name: newUser.name,
-        
         } as IUser,
-        message: 'success',
+        message: "success",
       };
     }
 
@@ -49,4 +48,47 @@ export const createNewUser = async (user: IUser): Promise<createUserReturnType> 
       message: "An error occurred: Unable to create user",
     };
   }
+};
+export const getUser = async (userData: userData): Promise<getUserReturnType> => {
+  return new Promise((resolve, reject) => {
+    if (userData.email) {
+      UserModel.findOne({ email: userData.email })
+        .then((data: dbUserType | null) => {
+          if (data) {
+            resolve({
+              user: {
+                userName: data.userName,
+                email: data.email,
+                name: data.name,
+                password: data.password,
+              },
+              status: 200,
+            });
+          } else {
+            reject({ status: 404, message: "No user exists with this email" });
+          }
+        })
+        .catch(() => reject({ status: 500, message: "Error finding user by email" }));
+    } else if (userData.userName) {
+      UserModel.findOne({ userName: userData.userName })
+        .then((data: dbUserType | null) => {
+          if (data) {
+            resolve({
+              user: {
+                userName: data.userName,
+                email: data.email,
+                name: data.name,
+                password: data.password,
+              },
+              status: 200,
+            });
+          } else {
+            reject({ status: 404, message: "No user exists with this username" });
+          }
+        })
+        .catch(() => reject({ status: 500, message: "Error finding user by username" }));
+    } else {
+      reject({ status: 400, message: "No search criteria provided" });
+    }
+  });
 };
