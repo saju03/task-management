@@ -51,3 +51,6 @@ export interface ErrorResponse {
 }
 
 
+export interface taskModel {
+  
+}

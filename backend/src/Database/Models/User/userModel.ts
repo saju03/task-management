@@ -1,5 +1,5 @@
-import mongoose, { Model, model, Schema } from "mongoose";
-import { IUser } from "../../interface.js";
+import  { Model, model, Schema } from "mongoose";
+import { IUser } from "../../../interface.js";
 
 const userSchema = new Schema<IUser>({
     userName:{type:String,required:[true,'User Name is required'],unique:true},

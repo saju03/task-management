@@ -1,4 +1,4 @@
-import { UserModel } from "../../Database/Models/userModel.js";
+import { UserModel } from "../../Database/Models/User/userModel.js";
 import { dbUserType, createUserReturnType, IUser, getUserReturnType, userData } from "../../interface.js";
 
 export const checkExistingUser = async (userDetail: string): Promise<boolean> => {
