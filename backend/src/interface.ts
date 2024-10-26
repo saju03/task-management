@@ -27,7 +27,7 @@ export type userHashDetails = {
 export interface userData {
   email?: string;
   userName?: string;
-  password:string | null
+  password: string | null;
 }
 
 export interface TokenResponse {
@@ -42,7 +42,7 @@ export interface getUserReturnType {
     name: string;
     password: string;
   };
-  status:number
+  status: number;
 }
 
 export interface ErrorResponse {
@@ -50,7 +50,15 @@ export interface ErrorResponse {
   message: string;
 }
 
-
-export interface taskModel {
-  
+export interface Task {
+  taskId: string;
+  project: string;
+  title: string;
+  description: string | null;
+  media: Array<string> | null;
+  parentTask: string | null;
+  subTasks: Array<string> | null;
+  createdDate: Date;
+  lastUpdated: Date;
+  dueDate: Date;
 }

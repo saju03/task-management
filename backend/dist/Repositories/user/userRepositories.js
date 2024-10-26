@@ -1,4 +1,4 @@
-import { UserModel } from "../../Database/Models/userModel.js";
+import { UserModel } from "../../Database/Models/User/userModel.js";
 export const checkExistingUser = async (userDetail) => {
     try {
         // Check by email first
