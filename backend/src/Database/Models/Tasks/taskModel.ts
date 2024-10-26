@@ -1,5 +1,6 @@
-import { model, Model, Schema } from "mongoose";
+import mongoose, { model, Model, Schema } from "mongoose";
 import { Task } from "../../../interface.js";
+import { UserModel } from "../User/userModel.js";
 
 const taskSchema = new Schema<Task>({
   taskId: {
@@ -39,8 +40,12 @@ const taskSchema = new Schema<Task>({
     type: Date,
     default: Date.now(),
   },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: UserModel,
+  },
 
-  // id:Number,
+  // id:Number,x`
   // description:String,
   // title:String,
   // images:Array,

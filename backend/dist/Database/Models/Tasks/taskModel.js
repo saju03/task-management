@@ -1,4 +1,5 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
+import { UserModel } from "../User/userModel.js";
 const taskSchema = new Schema({
     taskId: {
         type: String,
@@ -37,7 +38,11 @@ const taskSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
-    // id:Number,
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: UserModel,
+    },
+    // id:Number,x`
     // description:String,
     // title:String,
     // images:Array,

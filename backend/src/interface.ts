@@ -61,4 +61,5 @@ export interface Task {
   createdDate: Date;
   lastUpdated: Date;
   dueDate: Date;
+  createdBy:IUser
 }
