@@ -45,7 +45,7 @@ const taskSchema = new Schema<Task>({
     ref: UserModel,
   },
 
-  // id:Number,x`
+  // id:Number
   // description:String,
   // title:String,
   // images:Array,

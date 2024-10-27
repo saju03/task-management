@@ -19,7 +19,16 @@
   "scripts": {
 
     "build": "rollup --config",
+
     "start": "cd backend && cd build && node bundle.js"
+
+  },
+
+  "dependencies": {
+
+    "cloudinary": "^2.5.1",
+
+    "multer": "^1.4.5-lts.1"
 
   }
 

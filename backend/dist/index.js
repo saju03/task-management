@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import route from "./Routes/Route.js";
 import adminRoute from "./Routes/AdminRoutes.js";
 import taskRoute from "./Routes/TaskRoutes.js";
-import { errorHandlers } from "./Middleware/Error/ErrorHandelMilddleware.js";
+import { errorHandlers } from "./Middleware/Error/ErrorHandelMiddleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 initDB();
