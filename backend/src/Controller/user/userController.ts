@@ -6,6 +6,7 @@ import { CustomError } from "../../error.js";
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    debugger
     const { userName, password, email, name }: IUser = req.body;
     if (!userName || !email || !password) {
       const error = new Error("Missing required fields: userName, email, and password are required.");

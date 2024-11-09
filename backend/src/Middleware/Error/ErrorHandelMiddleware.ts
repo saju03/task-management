@@ -6,6 +6,7 @@ export const errorHandlers = (
   res: Response,
   next: NextFunction
 ) => {
+  
   const statusCode: number = err?.status || 500;
   res.status(statusCode).json({
     status: statusCode,
