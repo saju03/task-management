@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
 import express, { Application } from "express";
 import { Kafka, logLevel } from 'kafkajs';
 import winston from 'winston';
-const app: Application = express();
+dotenv.config()
 
+const app: Application = express();
+const PORT:string | number  = process.env.USER_SERVICE_PORT || 3000
 
 // Configure Winston to format log messages
 const kafkaLogger = winston.createLogger({
@@ -32,6 +35,8 @@ const toWinstonLogLevel = (kafkaLogLevel: any) => {
 
 // Custom logger for KafkaJS
 const customLogger = ({ level, log }:any) => {
+  console.log(log);
+  
   const { message, ...extra } = log;
   kafkaLogger.log({
     level: toWinstonLogLevel(level),
@@ -49,8 +54,12 @@ const customLogger = ({ level, log }:any) => {
         logCreator: () => customLogger,
       });
       
-const producer = kafka.producer();
+export const producer = kafka.producer();
+
+app.post('/user',)
+
+
 
 producer.connect().then(() => {
-  app.listen(1000, () => console.log("user service running"));
+  app.listen(PORT, () => console.log(`user service running http://localhost:${PORT}`));
 });
